@@ -4,11 +4,11 @@
 	}
 
 ;(function(){
-	let highlight = true; // flag of highlighting is active now
+	var highlight = true; // flag of highlighting is active now
 
-	let flag; // stored current or last ascii column
+	var flag; // stored current or last ascii column
 
-	let config = {
+	var config = {
 		highlightSelector: '.highlight > pre',
 		lineLength: 16 + 1, // length + EOL
 		ascii: wrapNode('ascii'),
@@ -16,7 +16,7 @@
 		offset: wrapNode('offset')
 	};
 
-	window.addEventListener("load", function() {
+	document.addEventListener("DOMContentLoaded", function() {
 
 		// get all 3st column (ascii) and bind handler
 		document
@@ -24,7 +24,7 @@
 			.forEach (function (node) {
 				// overlay for visual selection
 				// because firefox not update content between mouseup and mousedown for Selection API
-				let overlay = document.createElement('pre');
+				var overlay = document.createElement('pre');
 				overlay.classList.add('overlay');
 				overlay.textContent = node.textContent;
 				node.appendChild(overlay);
@@ -63,23 +63,23 @@
 
 	function mouseup () {
 		
-		let selection = document.getSelection().getRangeAt(0);
-		let selectionStart = selection.startOffset;
-		let selectionEnd = selection.endOffset;
+		var selection = document.getSelection().getRangeAt(0);
+		var selectionStart = selection.startOffset;
+		var selectionEnd = selection.endOffset;
 
 		if(highlight || !flag || !flag.isASCII || !flag.textContent.length || selectionStart == selectionEnd) 
 			return cleanSelection();
 		
-		let rawRange = document.createRange();
-    	let offsetRange = document.createRange();
-    	let overlayRange = document.createRange();
+		var rawRange = document.createRange();
+    	var offsetRange = document.createRange();
+    	var overlayRange = document.createRange();
 
     	// get text nodes
-    	let rawNode = flag.parentNode.childNodes[1].childNodes[0];  
-    	let offsetNode = flag.parentNode.childNodes[0].childNodes[0]; 
-    	let overlayNode = flag.querySelector('.overlay').childNodes[0]; 
+    	var rawNode = flag.parentNode.childNodes[1].childNodes[0];  
+    	var offsetNode = flag.parentNode.childNodes[0].childNodes[0]; 
+    	var overlayNode = flag.querySelector('.overlay').childNodes[0]; 
 		
-		let start, end, length; // offset start/end and length of rawNode or offsetNode
+		var start, end, length; // offset start/end and length of rawNode or offsetNode
     	
     	// ============== overlay ==============
 
@@ -131,7 +131,7 @@
 
 		// ============== form ==============
 
-		let form = flag.parentNode.parentNode.parentNode.parentNode.querySelector('form');
+		var form = flag.parentNode.parentNode.parentNode.parentNode.querySelector('form');
 
 		if (form) {
 			form.string_of_payload.value = offsetRange.toString().slice(0,8);
@@ -148,11 +148,11 @@
 
 		document.getSelection().removeAllRanges()
 
-		let overlay = flag.querySelector('.overlay');
-		let parent = flag.parentNode;
+		var overlay = flag.querySelector('.overlay');
+		var parent = flag.parentNode;
 
 		// reset first column with offset
-		let tmp = parent.childNodes[0].textContent.toString()
+		var tmp = parent.childNodes[0].textContent.toString()
 		parent.childNodes[0].textContent = ''; // its important
 		parent.childNodes[0].textContent = tmp;
 
@@ -170,7 +170,7 @@
 		flag.classList.remove('yesselect');
 
 		// reset form
-		let form = flag.parentNode.parentNode.parentNode.parentNode.querySelector('form');
+		var form = flag.parentNode.parentNode.parentNode.parentNode.querySelector('form');
 		if (form) {
 			form.string_of_payload.value = '';
 			form.part_of_payload.value = '';
