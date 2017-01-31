@@ -16,7 +16,7 @@
 		offset: wrapNode('offset')
 	};
 
-	document.addEventListener("DOMContentLoaded", function() {
+	window.addEventListener("load", function() {
 
 		// get all 3st column (ascii) and bind handler
 		document
@@ -147,7 +147,7 @@
 		if (!flag) flag = defaultFlag;
 
 		document.getSelection().removeAllRanges()
-		
+
 		let overlay = flag.querySelector('.overlay');
 		let parent = flag.parentNode;
 
