@@ -18,13 +18,17 @@
 
 	document.addEventListener("DOMContentLoaded", function() {
 
+		// get all 3st column (ascii) and bind handler
 		document
 			.querySelectorAll(config.highlightSelector + '> :last-child')
 			.forEach (function (node) {
+				// overlay for visual selection
+				// because firefox not update content between mouseup and mousedown for Selection API
 				let overlay = document.createElement('pre');
 				overlay.classList.add('overlay');
 				overlay.textContent = node.textContent;
 				node.appendChild(overlay);
+
 				node.addEventListener ('mousedown', mousedown, false);
 				node.classList.add('selection');
 				node.isASCII = true;
@@ -141,23 +145,25 @@
 	function cleanSelection (defaultFlag) {
 		if (!flag && !defaultFlag) return;
 		if (!flag) flag = defaultFlag;
+
 		document.getSelection().removeAllRanges()
+		
 		let overlay = flag.querySelector('.overlay');
 		let parent = flag.parentNode;
 
 		// reset first column with offset
 		let tmp = parent.childNodes[0].textContent.toString()
-		parent.childNodes[0].textContent = '';
+		parent.childNodes[0].textContent = ''; // its important
 		parent.childNodes[0].textContent = tmp;
 
 		// reset column with hex data
 		tmp = parent.childNodes[1].textContent.toString()
-		parent.childNodes[1].textContent = '';
+		parent.childNodes[1].textContent = ''; // its important
 		parent.childNodes[1].textContent = tmp;
 
 		// reset overlay
 		tmp = flag.textContent;
-		overlay.textContent = '';
+		overlay.textContent = ''; // its important
 		overlay.textContent = flag.textContent.toString();
 		
 		document.body.classList.remove('noselect');
