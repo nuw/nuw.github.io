@@ -45,11 +45,13 @@
 
 
 	function mousedown () {
-		clear(this);
+		cleanSelection(this);
+
 		flag = this;
+		highlight = false;
+
 		document.body.classList.add('noselect');
 		flag.classList.add('yesselect');
-		highlight = false;
 	}
 
 
@@ -60,7 +62,7 @@
 		let selectionEnd = selection.endOffset;
 
 		if(highlight || !flag || !flag.isASCII || !flag.textContent.length || selectionStart == selectionEnd) 
-			return clear();
+			return cleanSelection();
 		
 		let rawRange = document.createRange();
     	let offsetRange = document.createRange();
@@ -89,11 +91,11 @@
 
     	start = selectionStart * 3 - (selectionStart / config.lineLength |0) * 2;
 
+		if(rawNode.textContent[start] == ' ') start += 1;
+
     	end = selectionEnd * 3 - (selectionEnd / config.lineLength |0) * 2;
 
     	if(rawNode.textContent[end-1] == ' ') end -= 1;
-		if(rawNode.textContent[start] == ' ') start += 1;
-
 
 		if(!end || end > length || end < start) end = length;
 
@@ -110,15 +112,12 @@
 
     	if (flag.textContent[selectionStart] == '\n') start += 10;
 
-
     	end = (selectionEnd / config.lineLength |0) * 10 + 10;
 
     	if (flag.textContent[selectionEnd-1] == '\n') end -= 10;
 
-    	if(selectionEnd < 1) end = length;
-    	if( end > length || end < start) end = length;
+    	if(selectionEnd < 1 || end > length || end < start) end = length;
 
-    	console.log (start, end)
 
 		offsetRange.setStart(offsetNode, start);
 		offsetRange.setEnd(offsetNode, end);
@@ -127,6 +126,7 @@
 		// ============== form ==============
 
 		let form = flag.parentNode.parentNode.parentNode.parentNode.querySelector('form');
+
 		if (form) {
 			form.string_of_payload.value = offsetRange.toString().slice(0,8);
 			form.part_of_payload.value = rawRange.toString();
@@ -136,7 +136,7 @@
 
 	}
 
-	function clear (defaultFlag) {
+	function cleanSelection (defaultFlag) {
 		if (!flag && !defaultFlag) return;
 		if (!flag) flag = defaultFlag;
 		document.getSelection().removeAllRanges()
