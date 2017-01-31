@@ -35,8 +35,10 @@
 		// form handler
 		document.querySelectorAll('.btn.btn-default')
 			.forEach (function(node) {
-				node.addEventListener('mousedown', function() {
+				node.addEventListener('mousedown', function(e) {
+					e.preventDefault();
 					alert('Line: ' + this.parentNode.querySelectorAll('input')[0].value + '\n' + 'Data: ' + this.parentNode.querySelectorAll('input')[1].value)
+
 				})
 			});
 
