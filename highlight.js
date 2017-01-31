@@ -116,7 +116,9 @@
     	if (flag.textContent[selectionEnd-1] == '\n') end -= 10;
 
     	if(selectionEnd < 1) end = length;
-    	if( end > length ) end = length;
+    	if( end > length || end < start) end = length;
+
+    	console.log (start, end)
 
 		offsetRange.setStart(offsetNode, start);
 		offsetRange.setEnd(offsetNode, end);
