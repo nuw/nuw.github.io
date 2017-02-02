@@ -23,7 +23,7 @@
 			.querySelectorAll(config.highlightSelector + '> :last-child')
 			.forEach (function (node) {
 				// overlay for visual selection
-				// because firefox not update content between mouseup and mousedown for Selection API
+				// because firefox not update textContent between mouseup and mousedown for Selection API
 				var overlay = document.createElement('pre');
 				overlay.classList.add('overlay');
 				overlay.textContent = node.textContent;
@@ -79,7 +79,7 @@
     	var offsetNode = flag.parentNode.childNodes[0].childNodes[0]; 
     	var overlayNode = flag.querySelector('.overlay').childNodes[0]; 
 		
-		var start, end, length; // offset start/end and length of rawNode or offsetNode
+		var start, end, length; // offset start/end and length of rawNode or offsetNode or overlayNode
     	
     	// ============== overlay ==============
 
