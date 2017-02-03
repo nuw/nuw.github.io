@@ -13,10 +13,10 @@
 }
 
 .highlight ::selection {
-	background: none;
+	background: transparent;
 }
 .highlight ::-moz-selection {
-	background: none;
+	background: transparent;
 }
 
 .highlight {
