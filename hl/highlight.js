@@ -76,7 +76,6 @@
 
 	function selectionStart(e){
 		if(!e.target.highlight) return;
-		console.log('start');
 
 		selection.removeAllRanges(); 
 		focused = e.target;
@@ -90,8 +89,6 @@
 
 	function selectionEnd(e){
 		if(!focused) return last ? void (clean(last.parentNode), toForm(false)) : void null;
-
-		console.log('end');
 
 		selectionChange(false);
 		toForm(true);
